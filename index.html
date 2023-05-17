@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Todo List</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+</style>
+<body>
+	<h1>Todo List</h1>
+	<form>
+		<input type="text" name="task" placeholder="Enter a task...">
+		<button type="submit">Add</button>
+	</form>
+	<ul id="taskList">
+		<!-- Task items will be added dynamically here -->
+	</ul>
+
+	<script src="app.js"></script>
+</body>
+<script>
+    // Get references to the HTML elements we need
+const form = document.querySelector('form');
+const taskInput = document.querySelector('input[name="task"]');
+const taskList = document.querySelector('#taskList');
+
+// Add event listener to the form to handle adding tasks
+form.addEventListener('submit', function(event) {
+    // Prevent the form from submitting and refreshing the page
+    event.preventDefault();
+
+    // Get the user's input
+    const taskName = taskInput.value.trim();
+
+    // If the input is not empty, create a new task item
+    if (taskName !== '') {
+        const taskItem = document.createElement('li');
+        taskItem.innerHTML = `
+            <span>${taskName}</span>
+            <button class="delete">Delete</button>
+        `;
+        taskList.appendChild(taskItem);
+
+        // Clear the input field
+        taskInput.value = '';
+
+        // Add event listener to the delete button
+        const deleteButton = taskItem.querySelector('.delete');
+        deleteButton.addEventListener('click', function() {
+            taskItem.remove();
+        });
+    }
+});
+
+</script>
+</html>
